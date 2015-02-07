@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %} Sign in {% endblock %}
+{% block header %} Sign in {% endblock %}
+{% block content %}
+<div class="col-md-4 col-md-offset-4">
+	<div class="login-panel panel panel-default">
+	<!--Panel for login fields  -->
+		<div class="panel-heading">
+			<h3 class="panel-title">
+				Log In
+			</h3>
+		</div>
+		<div class="panel-body">
+			<br>
+			{% if form.errors %}
+			<p class="error" style="color: red;">
+				Username and/or password is incorrect
+			</p>
+			{% endif %}
+			<br>
+			<form role="form" action="/accounts/login/$" method="POST">{% csrf_token %}
+				<div class="input-group">
+					 <!-- <label for="username">User name</label> -->
+					 <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+					 <input type="text" class="form-control" name="username" value="" id="username" placeholder="Username" />
+				</div>
+				<div class="input-group">
+					 <!-- <label for="password">Password</label> -->
+					 <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+					 <input type="password" class="form-control" name="password" value="" id="password" placeholder="Password" />
+				</div>
+
+				<input type="hidden" name="next" value="{{ next }}" />
+		        <div style="margin-top:10px" class="form-group">
+
+		            <!-- Button -->
+
+		            <div class="col-sm-12 controls " style='padding: 0px 47px 10px;'>
+		              <button type="submit" class="btn btn-sm btn-success " style='padding:10px 90px;' >Log in</button>
+		            </div>
+                    <div class="col-sm-12 controls " style='padding: 0px 47px 10px;'>
+                    <a href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a>  		        </div>
+
+			    <div class="form-group">
+		           <div class="col-md-12 control">
+		               <div style=" padding-top:15px; font-size:85%" >
+		                   Don't have an account?
+		               <a href="{% url 'meHungry_customer_website.views.register' %}">Sign up</a>
+		               </div>
+		           </div>
+		   		</div>
+			</form>
+		</div>
+		<!-- <div class="panel-footer">
+
+		</div> -->
+	</div>
+</div>
+</div>
+
+{% endblock %}
+

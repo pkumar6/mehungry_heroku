@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Landing page{% endblock %}
+{% block content %}
+
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="intro-message">
+                        <h2>Lunches prepared by Chicago's chefs</h2>
+                        <h3>Delivered for free</h3>
+                        <hr class="intro-divider">
+                        <a onclick="location.href='{% url 'meHungry_customer_website.views.display_restaurants' %}'" class="purpleButton ui button"> <span class="button-text">Browse menus</span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+        <div class="purple instafeedoverlay content-section-b ">
+            <div class="container">
+                <div id="trynow" class="row">
+                    <div class="col-offset-12">
+                        <a href="#howto" class="purpleButton ui button"> <span class="button-text">How it works!</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{% comment %}    <div id="instafeed">
+    </div>{% endcomment %}
+
+
+    <!--
+        <div class="banner">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h2>Connect to meHungry:</h2>
+                    </div>
+                    <div class="col-lg-6">
+                        <ul class="list-inline banner-social-buttons">
+
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+         /.banner -->
+
+
+    <div id="howto" class="content-section-a">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-md-offset-1 col-sm-4">
+                    <img class="img-responsive" src="{% static "img/step-one-small.png" %}" alt="">
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <h3 class="section-heading">Pick a dish</h3>
+                    <p class="lead">We have handpicked lunch specials from great restaurants near you.</p>
+                </div>
+                <div class="col-lg-3 col-md-offset-1 col-sm-4">
+                    <img class="img-responsive" src="{% static "img/step-two-small.png" %}" alt="">
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <h3 class="section-heading">Decide an ETA</h3>
+                    <p class="lead">If we're swamped, or you gotta have it now, pay for faster delivery. Otherwise, it's on the house.</p>
+                </div>
+                <div class="col-lg-3 col-md-offset-1 col-sm-4">
+                    <img class="img-responsive" src="{% static "img/step-three-small.png" %}" alt="">
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <h3 class="section-heading">Enjoy your meal!</h3>
+                    <p class="lead">You'll get a call when the driver's close.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class=" content-section-b ">
+        <div class="container">
+            <div id="trynow" class="row">
+                <div class="col-offset-12">
+                    <div class="whitefont">
+                        <h3>Check out some restaurants here!</h3>
+                    </div>
+                    <a onclick="location.href='{% url 'meHungry_customer_website.views.display_restaurants' %}'" class="purpleButton ui button"> <span class="network-name">MEHUNGRY!</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:wrp="http://www.w3.org/1999/xhtml">
+
+<head>
+    {% load staticfiles %}
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="An awesome way to save money while ordering great lunch specials from restaurants around you.">
+    <meta name="author" content="meHungry">
+    <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.min.css" %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static "css/semantic.min.css" %}"/>
+    <link rel='stylesheet' type='text/css' href="{% static "css/meHungry.css" %}"/>
+    <link rel='stylesheet' type='text/css' href="{% static "font-awesome/css/font-awesome.min.css" %}"/>
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+
+
+    <script src="{% static "js/jquery-2.1.3.min.js" %}"></script>
+    <script src="{% static "js/bootstrap.js" %}"></script>
+    <script src="{% static "js/site.js" %}"></script>
+    <script src="{% static "js/jquery-ui-1.10.4.custom.min.js" %}"></script>
+    <script src="{% static "js/eldarion-ajax.min.js" %}"></script>
+    <script src="{% static "js/semantic.min.js" %}"></script>
+
+    {% block more_javascripts %}{% endblock %}
+
+
+    <title>{{ title }} {% block title %}{% endblock %}</title>
+
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'meHungry_customer_website.views.homepage_view' %}">meHungry</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="{% url 'meHungry_customer_website.views.display_restaurants' %}">Restaurants</a>
+                </li>
+                <li>
+                    <a href="{% url 'meHungry_customer_website.views.about' %}">About</a>
+                </li>
+                {% if user.is_authenticated %}
+                    <li>
+                        <a href="{% url 'meHungry_customer_website.views.user_home' %}">{{ user.first_name }}</a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="{% url 'meHungry_customer_website.views.register' %}">Sign up</a>
+                    </li>
+                {% endif %}
+
+                <!-- Login/Logout button according to user login status -->
+                <li>{% if not user.is_authenticated %}
+                    <a id="login" data-toggle="modal" data-target=".bs-example-modal-sm"> Log In </a>
+                    {% comment %} <a href="/home"> Log In </a>{% endcomment %}
+                {% else %}
+                    <a href="/accounts/logout/"> Log Out </a>
+                {% endif %}
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<!-- Content -->
+<div id="wrap" class='clearfix clearnav'>
+    {% block content %}{% endblock %}
+</div>
+
+<div class="modal bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="login-panel panel panel-default">
+                <!--Panel for login fields  -->
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Log In
+
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <br>
+                    {% if form.errors %}
+                        <p class="error" style="color: red;">
+                            Username and/or password is incorrect
+                        </p>
+                    {% endif %}
+                    <br>
+                    <form role="form" action="{% url 'django.contrib.auth.views.login' %}" method="POST">{% csrf_token %}
+                        <div class="input-group">
+                            <!-- <label for="username">User name</label> -->
+                            <span class="input-group-addon"><i class="mail outline icon"></i></span>
+                            <input type="text" class="form-control" name="Email" value="" id="Email" placeholder="Email" />
+                        </div>
+                        <div class="input-group">
+                            <!-- <label for="password">Password</label> -->
+                            <span class="input-group-addon"><i class="unlock icon"></i></span>
+                            <input type="password" class="form-control" name="password" value="" id="password" placeholder="Password" />
+                        </div>
+
+                        <input type="hidden" name="next" value="{{ next }}" />
+                        <div style="margin-top:10px" class="form-group">
+                            <!-- Button -->
+                            <div class="controls " style='padding: 0px 47px 10px;'>
+                                <button type="submit" class="btn btn-sm btn-success " style='padding:10px 90px;' >Log in</button>
+                                <br>
+                                <hr/>
+                                <a href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a>                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="control">
+                                <div style=" padding-top:15px; font-size:85%" >
+                                    Don't have an account?
+                                    <a href="{% url 'meHungry_customer_website.views.register' %}">Sign up</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Footer -->
+
+
+
+
+<!-- Footer -->
+<footer class="black footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 connect">
+                <a style="cursor:default; padding-right:10px;">Connect with us:</a>
+                <a href="mailto:mehungry312@gmail.com" class="contactHover ui circular mail icon button black"">
+                <i class=" mail icon"></i>
+                </a>
+                <a href="https://www.facebook.com/pages/MeHungry/1544930932442859" class="contactHover ui circular facebook icon button black" >
+                    <i class="facebook icon"></i>
+                </a>
+                <a href="https://twitter.com/meHungryNow" class="contactHover ui circular twitter icon button black">
+                    <i class="twitter icon"></i>
+                </a>
+                <a href="https://instagram.com/meHungryNow" class="contactHover ui circular instagram icon button black">
+                    <i class="instagram icon"></i>
+                </a>
+            </div>
+            <p class="copyright small">Copyright &copy; meHungry 2015. All Rights Reserved</p>
+        </div>
+    </div>
+</footer>
+
+<script src="{% static "js/jquery-2.1.3.min.js" %}"></script>
+<script src="{% static "js/bootstrap.js" %}"></script>
+<script src="{% static "js/site.js" %}"></script>
+<script src="{% static "js/jquery-ui-1.10.4.custom.min.js" %}"></script>
+<script src="{% static "js/eldarion-ajax.min.js" %}"></script>
+
+
+
+<<<<<<< HEAD
+<!-- Script for ajax csrf verification -->
+=======
+<script type="text/javascript" src="{% static "js/instafeed.min.js" %}"></script>
+>>>>>>> 5370e54041c80aa72bcf2dae9ed88ef8d612715b
+<script>
+    $(function () {
+
+        $.ajaxSetup({
+            headers: { "X-CSRFToken": getCookie("csrftoken") }
+        });
+    });
+
+
+    function getCookie(c_name)
+    {
+        if (document.cookie.length > 0)
+        {
+            c_start = document.cookie.indexOf(c_name + "=");
+            if (c_start != -1)
+            {
+                c_start = c_start + c_name.length + 1;
+                c_end = document.cookie.indexOf(";", c_start);
+                if (c_end == -1) c_end = document.cookie.length;
+                return unescape(document.cookie.substring(c_start,c_end));
+            }
+        }
+        return "";
+    }
+
+{% comment %}
+    Instafeed
+    var feed = new Instafeed({
+        get: 'tagged',
+        tagName: 'kitchen',
+        clientId: '658c3f52481f46c1806f5b0dbdc59ae5',
+        limit: 12,
+        links: true
+    });
+    feed.run();{% endcomment %}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+{%extends "base.html"%}
+
+<!-- Use new blocks to implement strip.js
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script>
+    Stripe.setP
+</script>
+-->
+
+
+{% block more_javasctipts %}
+
+{% endblock %}
+
+
+{% block content %}
+   
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">    
+            <table width="100%">
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th> Unit Price</th>
+                    <th></th>
+                </tr>
+                {% if food_cart.items %}
+                    {% for item in food_cart.items %}
+
+                        <tr>
+                            <td>{{ item.product }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>{{ item.price }}</td>
+                           <td><a class="btn ajax" style="color:red;" href="{% url 'item_removed' item.product.id %}" data-method="post" data-replace-closest="">Delete Item</a></td>
+
+                    {% endfor %}
+
+                 {%  endif %}
+            </table>
+
+        <div class="container row">
+             <div class="col-xs-12 well ">
+                <h2>Grand Total <span class="pull-right"> {{ grand_total }}</span></h2>
+
+                       <h3> Delivery Address:</h3><br>
+                       <h4>Street: {{ customer_profile.Street }}<br></h4>
+                        <h4>Apt# :{{ customer_profile.Apt }}<br></h4>
+                       <h4> City :{{ customer_profile.City }}<br></h4>
+                        <h4>State:{{ customer_profile.State }}<br></h4>
+                        <h4>Zip  :{{ customer_profile.Zip }}</h4> |  <button href="#">Change Delivery Address</button> <br>
+                        <hr/> <br>
+                        <h1>Pay with a new card</h1>
+                        <form action="/charge_customer/{{ menuid }}/" method="POST">{% csrf_token %}
+                          <script
+                            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                            data-key="pk_test_xDKTfOPxaGQBk3o3QOYUsVuJ"
+                            data-image="/square-image.png"
+                            data-name="me Hungry"
+                            data-description=" {% for item in food_order.items %}
+                                                {{ item.quantity }} order of {{ item.product }}
+                                               {% endfor %}"
+                            data-amount="{{ dollar_total }}">
+                          </script>
+                        </form>
+                        <br>
+                 <h2> <button onclick="location.href='{% url 'meHungry_customer_website.views.charge_customer' menuid %}'" class="btn-group-xs btn-success">Charge me with a saved card </button></h2>
+
+                     </tr>
+
+             </div>
+        </div>
+
+
+
+    </div>
+</div>
+</div>
+
+
+{%endblock%}

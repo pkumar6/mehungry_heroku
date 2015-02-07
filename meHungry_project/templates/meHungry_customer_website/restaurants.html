@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+
+    <div class="container restaurantContainer">
+        <div class="row">
+            <div class="col-md-12">
+                {% for restaurant in restaurants %}
+                    <div class = "restaurantItem row ">
+                        <div class="col-md-3 restCol1 margin-auto">
+                            <div class="circularPic menuitemone " ></div>
+                        </div>
+                        <div class="col-md-6 restCol2 margin-auto ">
+                            <div>
+                                <h1>{{ restaurant.name }}</h1>
+                                <div class="ui horizontal label">
+                                    <p>{{ restaurant.cuisine }}</p>
+                                </div>
+                                <h4>{{ restaurant.desc }}</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-3 restCol3 margin-auto ">
+                            <h5>
+                                {{ restaurant.addressLine1 }}
+                                <br>{{ restaurant.city }}, {{ restaurant.state }}
+                            </h5>
+                            {% if restaurant.delivery %}
+                                <p style="color: green;">
+                                    We are delivering!
+                                </p>
+                            {% else %}
+                                <p style="color: red;">
+                                    We are not delivering! :(
+                                </p>
+                            {% endif %}
+                            </br>
+                            <div class="restButton ui floated primary button " onclick="location.href='{% url 'meHungry_customer_website.views.display_menu' restaurant.id %}'"method="Post">
+                                View menu
+                                <i class="right chevron icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class = "restaurantItem row ">
+                        {% for food in restaurant.getFood %}  
+                            <div class="col-md-4 margin-auto">
+                                {{food}}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
