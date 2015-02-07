@@ -65,11 +65,11 @@ PAYMENTS_PLANS = {
 }
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -165,20 +165,27 @@ WSGI_APPLICATION = 'meHungry_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
-# Parse database configuration from $DATABASE_URL
-#import dj_database_url
-#DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
+# try to load local_settings.py if it exists
+try:
+  from local_settings import *
+except Exception as e:
+  pass
 
-DATABASES = {
+# Parse database configuration from $DATABASE_URL
+import dj_database_url
+DATABASES = {'default': dj_database_url.config()}
+
+"""DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'mehungry',
         'USER': 'pranaykumar',
         'PASSWORD': '',
-       # 'HOST': '54.148.25.160',
-       # 'PORT': '3306',
+        'HOST': '54.148.25.160',
+        'PORT': '3306',
     }
-}
+}"""
+
 
 #CARTON Settings
 CART_PRODUCT_MODEL='meHungry_customer_website.models.FoodItem'
@@ -211,7 +218,7 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = ''
+STATIC_ROOT = 'staticfiles'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
